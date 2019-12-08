@@ -51,21 +51,9 @@ public class NalmatController {
         
         List<Mag> mag1 = magRepository.findByid(nalmat1.get(0).getMagId());
         
-        List<Promat> promat1 = promatRepository.findAll();
+        List<Promat> promat1 = promatRepository.findbyNalmatid(nalmat1.get(0).getId());
         
-        List<Promat> p = new ArrayList<Promat>();
-        
-        for (Promat x : promat1) {
-        	if (x.getNalmatId() == nalmat1.get(0).getId()) {
-        		p.add(x);
-        		System.out.println(x.getRoba().getNazrob());
-        	}
-        }
-        
-        
-        //System.out.println(nalmat1.get().getNazdok());
-        
-        ByteArrayInputStream bis = GeneratePdfReport1.robaReport(nalmat1.get(0), komit1.get(0), mag1.get(0), p);
+        ByteArrayInputStream bis = GeneratePdfReport1.robaReport(nalmat1.get(0), komit1.get(0), mag1.get(0), promat1);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");

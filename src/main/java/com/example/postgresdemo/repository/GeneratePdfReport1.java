@@ -5,6 +5,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -25,6 +26,15 @@ import java.util.Optional;
 import com.example.postgresdemo.repository.*;
 
 public class GeneratePdfReport1 {
+	
+	private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
+    }
+	
+	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+            Font.BOLD);
 
     private static final Logger logger = LoggerFactory.getLogger(GeneratePdfReport.class);
 
@@ -34,9 +44,15 @@ public class GeneratePdfReport1 {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
+        	
+        	Paragraph preface = new Paragraph();
+        	
+        	addEmptyLine(preface, 1);
+        	
+        	preface.add(new Paragraph("Title of the document" + nalmat.getNazdok().toString(), catFont));
 
             PdfPTable table = new PdfPTable(3);
-            table.setWidthPercentage(60);
+            table.setWidthPercentage(100);
             table.setWidths(new int[]{1, 3, 3});
 
             Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -74,7 +90,7 @@ public class GeneratePdfReport1 {
                 table.addCell(cell);
                 
                 
-                
+                addEmptyLine(preface, 1);
                 
             for (Promat m : p) {
                 cell = new PdfPCell(new Phrase(m.getRoba().getNazrob().toString()));
@@ -92,11 +108,15 @@ public class GeneratePdfReport1 {
                 table.addCell(cell);
 
             }
+            
+            
                
 
 
             PdfWriter.getInstance(document, out);
+            document.setMargins(20, 20, 20, 20);
             document.open();
+            document.add(preface);
             document.add(table);
 
             document.close();
