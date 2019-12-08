@@ -72,6 +72,10 @@ public class GeneratePdfReport1 {
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
+                
+                
+                
+                
             for (Promat m : p) {
                 cell = new PdfPCell(new Phrase(m.getRoba().getNazrob().toString()));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
