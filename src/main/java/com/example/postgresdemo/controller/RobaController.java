@@ -58,6 +58,39 @@ public class RobaController {
         return robaRepository.save(roba);
     }
 	
+   @PutMapping("/roba/{robaId}/grproba/{grprobaId}")
+    public Roba updateRoba(@PathVariable Long robaId, @PathVariable Long grprobaId,
+                                   @Valid @RequestBody Roba robaRequest) {
+	   
+	   if(!grpRobaRepository.existsById(grprobaId)) {
+           throw new ResourceNotFoundException("GrpRoba not found with id " + grprobaId);
+       }
+	   
+	   
+        return robaRepository.findById(robaId)
+                .map(roba -> {
+                	System.out.println(grprobaId);
+                	System.out.println(grpRobaRepository.getOne(grprobaId).getNaziv());
+                	
+                	roba.setGrproba(grpRobaRepository.getOne(grprobaId));
+                	
+                	
+                	System.out.println(roba.getGrproba().getNaziv());
+                	
+                	roba.setNazrob(robaRequest.getNazrob());
+                	//roba.setGrproba(robaRequest.getGrproba().getId());
+                	System.out.println(roba.getNazrob());
+                	
+                    roba.setSifra(robaRequest.getSifra());
+                    System.out.println(roba.getSifra());
+                    return robaRepository.save(roba);
+                    
+                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + robaId));
+    }
+	
+	
+	
+	
 	@RequestMapping(value="/getpdf", method=RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE )
 	public ResponseEntity<InputStreamResource> robaReport() {
 

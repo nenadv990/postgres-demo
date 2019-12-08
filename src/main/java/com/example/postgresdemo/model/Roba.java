@@ -65,10 +65,22 @@ public class Roba extends AuditModel {
 	public void setError(String error) {
 		this.error = error;
 	}
+	
+	public Long getGrpRobaId(GrpRoba grproba) {
+		return grproba.getId();
+	}
+	
+	public void setGrpRobaId(GrpRoba grproba) {
+		this.grproba.setId(grproba.getId());
+	}
+	
+	public String toString() {
+		return this.nazrob.toString() + " " + this.getGrproba().getNaziv();
+	}
+
+}
 
 	
 	
 	
-	
-	
-}
+

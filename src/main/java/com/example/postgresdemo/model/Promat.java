@@ -37,6 +37,12 @@ public class Promat {
 	
 	@Column(columnDefinition="Decimal(10,2)")
 	private Float prodcen;
+	
+	@Column(columnDefinition="Integer")
+	private Integer ulkol;
+	
+	@Column(columnDefinition="Integer")
+	private Integer izkol;
 
 	public Long getId() {
 		return id;
@@ -73,5 +79,23 @@ public class Promat {
 	public Long getNalmatId() {
 		return nalmat.getId();
 	}
+
+	public Integer getUlkol() {
+		return ulkol;
+	}
+
+	public void setUlkol(Integer ulkol) {
+		this.ulkol = ulkol;
+	}
+
+	public Integer getIzkol() {
+		return izkol;
+	}
+
+	public void setIzkol(Integer izkol) {
+		this.izkol = izkol;
+	}
+	
+	
 
 }

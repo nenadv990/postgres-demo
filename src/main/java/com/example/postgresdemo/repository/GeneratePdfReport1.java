@@ -51,9 +51,9 @@ public class GeneratePdfReport1 {
         	
         	preface.add(new Paragraph("Title of the document" + nalmat.getNazdok().toString(), catFont));
 
-            PdfPTable table = new PdfPTable(3);
+            PdfPTable table = new PdfPTable(5);
             table.setWidthPercentage(100);
-            table.setWidths(new int[]{1, 3, 3});
+            table.setWidths(new int[]{1, 3, 3, 3, 3});
 
             Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -89,6 +89,16 @@ public class GeneratePdfReport1 {
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
                 
+                cell = new PdfPCell(new Phrase(komit.getNazkom().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+                
+                cell = new PdfPCell(new Phrase(mag.getNaziv().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+                
                 
                 addEmptyLine(preface, 1);
                 
@@ -102,10 +112,13 @@ public class GeneratePdfReport1 {
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
+                
                 cell = new PdfPCell(new Phrase(m.getProdcen().toString()));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
+                
+
 
             }
             
