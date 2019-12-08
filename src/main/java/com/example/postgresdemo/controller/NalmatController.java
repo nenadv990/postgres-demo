@@ -1,6 +1,7 @@
 package com.example.postgresdemo.controller;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.postgresdemo.model.Roba;
 import com.example.postgresdemo.model.Nalmat;
+import com.example.postgresdemo.model.Promat;
 import com.example.postgresdemo.model.Komit;
 import com.example.postgresdemo.model.Mag;
 import com.example.postgresdemo.repository.GeneratePdfReport1;
 import com.example.postgresdemo.repository.KomitRepository;
 import com.example.postgresdemo.repository.MagRepository;
-import com.example.postgresdemo.repository.NalmatRepository;;
+import com.example.postgresdemo.repository.NalmatRepository;
+import com.example.postgresdemo.repository.PromatRepository;
 
 @RestController
 public class NalmatController {
@@ -31,6 +34,9 @@ public class NalmatController {
 	
 	@Autowired
     private MagRepository magRepository;
+	
+	@Autowired
+    private PromatRepository promatRepository;
 	
 	@Autowired
     private NalmatRepository nalmatRepository;
@@ -45,10 +51,21 @@ public class NalmatController {
         
         List<Mag> mag1 = magRepository.findByid(nalmat1.get(0).getMagId());
         
+        List<Promat> promat1 = promatRepository.findAll();
+        
+        List<Promat> p = new ArrayList<Promat>();
+        
+        for (Promat x : promat1) {
+        	if (x.getNalmatId() == nalmat1.get(0).getId()) {
+        		p.add(x);
+        		System.out.println(x.getRoba().getNazrob());
+        	}
+        }
+        
         
         //System.out.println(nalmat1.get().getNazdok());
         
-        ByteArrayInputStream bis = GeneratePdfReport1.robaReport(nalmat1.get(0), komit1.get(0), mag1.get(0));
+        ByteArrayInputStream bis = GeneratePdfReport1.robaReport(nalmat1.get(0), komit1.get(0), mag1.get(0), p);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
